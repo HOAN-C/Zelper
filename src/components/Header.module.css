@@ -1,0 +1,17 @@
+.container {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  margin: 1rem;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.img {
+  margin: 1rem;
+}
