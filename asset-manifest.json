@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.0db2913d.css",
-    "main.js": "/static/js/main.1e5c2882.js",
-    "index.html": "/index.html",
-    "main.0db2913d.css.map": "/static/css/main.0db2913d.css.map",
-    "main.1e5c2882.js.map": "/static/js/main.1e5c2882.js.map"
+    "main.css": "/Zelper/static/css/main.0db2913d.css",
+    "main.js": "/Zelper/static/js/main.2f6b007c.js",
+    "index.html": "/Zelper/index.html",
+    "main.0db2913d.css.map": "/Zelper/static/css/main.0db2913d.css.map",
+    "main.2f6b007c.js.map": "/Zelper/static/js/main.2f6b007c.js.map"
   },
   "entrypoints": [
     "static/css/main.0db2913d.css",
-    "static/js/main.1e5c2882.js"
+    "static/js/main.2f6b007c.js"
   ]
 }
