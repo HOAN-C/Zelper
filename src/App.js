@@ -67,7 +67,7 @@ export default function App() {
             />
           </Item>
           <Item>
-            <Disc>2. 조준경 클리크당 조절 MOA(cm)</Disc>
+            <Disc>2. 조준경 클리크당 조절 MOA</Disc>
             <Select value={opticMOA} onChange={handleOpticMOA}>
               {opticMOAList.map((MOA, index) => (
                 <Option key={index} value={index}>
@@ -82,7 +82,7 @@ export default function App() {
             )}
           </Item>
           <Item>
-            <Disc>3. 탄착군 - 목표 거리</Disc>
+            <Disc>3. 탄착군 - 목표 거리(cm, 직선기준)</Disc>
             <Input
               placeholder="거리 입력(cm 단위, 소숫점 가능)"
               type="number"
