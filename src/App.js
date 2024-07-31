@@ -15,40 +15,51 @@ export default function App() {
   ];
 
   const [showDonation, setShowDonation] = useState(false);
-
-  const [distance, setDistance] = useState(10);
-  const [opticMOA, setOpticMOA] = useState(0); // 1/n MOA : n-1 값이 들어감
+  const [distance, setDistance] = useState(0);
+  const [opticMOA, setOpticMOA] = useState(1); // 1/n MOA : n-1 값이 들어감
   const [gropingToTargetDistance, setGropingToTargetDistance] = useState(0);
   const [result, setResult] = useState(0);
   const [perOneClick, setPerOneClick] = useState(null);
 
-  const handleOpticMOA = (event) => {
-    setOpticMOA(Number(event.target.value));
+  const handleDistance = (event) => {
+    const value = Number(event.target.value);
+    setDistance(value);
+    console.log("distance: " + value);
   };
 
-  const handleDistance = (event) => {
-    setDistance(Number(event.target.value));
+  const handleOpticMOA = (event) => {
+    const value = Number(event.target.value);
+    setOpticMOA(value);
+    console.log("opticMOA: " + value);
   };
 
   const handleGropingToTargetDistance = (event) => {
-    setGropingToTargetDistance(Number(event.target.value));
+    const value = Number(event.target.value);
+    setGropingToTargetDistance(value);
+    console.log("gropingToTargetDistance: " + value);
+  };
+
+  const calculatePerOneClick = (distance) => {
+    let oneMOA = (2.65938 * distance * 100) / 9144;
+    return Math.floor(oneMOA * 100) / 100; // 소수점 두 자리 자르기
   };
 
   useEffect(() => {
-    let oneMOA = (2.65938 * distance * 100) / 9144; // 1MOA를 움직일 때 마다 입력한 distance에서 변하는 거리
-    let roundedOneMOA = Number(oneMOA.toFixed(2));
+    let roundedOneMOA = calculatePerOneClick(distance);
     console.log("oneMOA: " + roundedOneMOA);
-    setPerOneClick((roundedOneMOA / (opticMOA + 1)).toFixed(2));
-    setResult(0);
+    setPerOneClick(
+      (Math.floor((roundedOneMOA / (opticMOA + 1)) * 100) / 100).toFixed(2)
+    );
+    setResult(gropingToTargetDistance / (roundedOneMOA / (opticMOA + 1)));
   }, [distance, opticMOA, gropingToTargetDistance]);
 
   return (
     <Container>
-      <Header setShowDonation={setShowDonation}></Header>
+      <Header setShowDonation={setShowDonation} />
       <Main>
         <SelectionContainer>
           <Item>
-            <Disc>1. 표적지까지 거리</Disc>
+            <Disc>1. 표적지까지 거리(m)</Disc>
             <Input
               placeholder="거리 입력(m 단위, 소숫점 가능)"
               type="number"
@@ -56,7 +67,7 @@ export default function App() {
             />
           </Item>
           <Item>
-            <Disc>2. 조준경 클리크당 조절 MOA</Disc>
+            <Disc>2. 조준경 클리크당 조절 MOA(cm)</Disc>
             <Select value={opticMOA} onChange={handleOpticMOA}>
               {opticMOAList.map((MOA, index) => (
                 <Option key={index} value={index}>
@@ -64,9 +75,11 @@ export default function App() {
                 </Option>
               ))}
             </Select>
-            <Explanation>
-              1 click당 탄착군이 {perOneClick}cm 만큼 이동합니다.
-            </Explanation>
+            {distance !== 0 && (
+              <Explanation>
+                💡 1 click당 탄착군이 {perOneClick}cm 만큼 이동합니다.
+              </Explanation>
+            )}
           </Item>
           <Item>
             <Disc>3. 탄착군 - 목표 거리</Disc>
@@ -79,7 +92,11 @@ export default function App() {
         </SelectionContainer>
         <Item>
           <Disc>조절 클리크</Disc>
-          {result}
+          {distance && gropingToTargetDistance ? (
+            <Explanation>{result.toFixed(0)} Click</Explanation>
+          ) : (
+            <Explanation>⚠️1~3번 값을 입력하세요⚠️</Explanation>
+          )}
         </Item>
       </Main>
     </Container>
