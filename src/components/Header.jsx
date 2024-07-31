@@ -6,7 +6,7 @@ export default function Header() {
     <Container>
       <Title>Zelper</Title>
       {/* <BiSolidDonateHeart /> */}
-      <Image alt="Donation" src={coffeeImg} />
+      {/* <Image alt="Donation" src={coffeeImg} /> */}
     </Container>
   );
 }
